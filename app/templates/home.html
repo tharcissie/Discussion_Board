@@ -30,7 +30,7 @@
         {% if post %}
         <small>
           <a href="{% url 'topic_detail' post.topic.id %}">
-            Last Post By {{ post.created_by.username }} at {{ post.created_at }}
+            Last Post created at {{ post.created_at }}
           </a>
         </small>
         {% else %}

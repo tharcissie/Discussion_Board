@@ -2,7 +2,11 @@
 {% load crispy_forms_tags %}
 {% block content%}
 
-<div class="container" style="margin-top:8%">
+<div class="container">
+    <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+        <li class="breadcrumb-item active">My account</li>
+      </ol>
     <div class="content-section">
         <div class="media">
             <div class="container">
@@ -18,7 +22,7 @@
                                 <div class="account-heading">
                                     <p><b>Name:</b> {{ user.username }}</p>
                                     <p><b>Email:</b> {{user.email}}</p>
-                                    <a class="btn btn-sm text-light mr-3" data-toggle="modal" style="background-color: #A01A58;"
+                                    <a class="btn btn-sm bg-warning mr-3" data-toggle="modal"
                                         data-target=".bd-example-modal-md "><strong>Update Profile</strong></a>
                                 </div>
                             </div>
