@@ -108,39 +108,17 @@ def update_topic(request, id):
     context={
         'form':form
     }
-    return render(request, 'update_t', context)
+    return render(request, 'update_t.html', context)
 
     
-
-def update_post(request, id):
-    post = get_object_or_404(Post, id=id)
-    form = PostForm(request.POST or None, instance = post)
-    if form.is_valid():
-        form.save()
-        return redirect('topic_detail', id=id)
-    context={
-        'form':form
-    }
-    return render(request, 'update_p', context)
-
-
-
 def delete_topic(request, id):
     context ={} 
     topic = get_object_or_404(Topic, id = id) 
     if request.method =="POST": 
         topic.delete() 
-        return redirect('topic_detail', id=id) 
+        return redirect('home') 
   
     return render(request, "delete_t.html", context) 
-    
 
-def delete_post(request, id):
-    context ={} 
-    post = get_object_or_404(Post, id = id) 
-    if request.method =="POST": 
-        post.delete() 
-        return redirect('topic_detail', id=id) 
-  
-    return render(request, "delete_p.html", context) 
+
 
