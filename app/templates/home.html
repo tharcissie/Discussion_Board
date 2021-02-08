@@ -17,6 +17,7 @@
       <img class="card-img-top" src="{{board.image.url}}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"> <a href="{% url 'topics' board.id %}">{{ board.name }}</a></h5>
+        <hr>
         <p class="card-text">{{ board.description }}</p>
         <div class="row">
           <div class="col-md-6">
