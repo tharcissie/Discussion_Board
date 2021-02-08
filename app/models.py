@@ -33,6 +33,9 @@ class Board(models.Model):
     def get_last_post(self):
         return Post.objects.filter(topic__board=self).order_by('-created_at').first()
 
+    class Meta:
+        ordering = ["-pk"]
+
 
 class Topic(models.Model):
     subject = models.CharField(max_length=255)
@@ -44,6 +47,9 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ["last_updated"]
 
 
 class Post(models.Model):
@@ -57,6 +63,5 @@ class Post(models.Model):
     def __str__(self):
         return self.name
 
-    def __str__(self):
-        truncated_message = Truncator(self.message)
-        return truncated_message.chars(30)
+    class Meta:
+        ordering = ["-pk"]
