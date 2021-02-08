@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from app.models import *
 from django.db.models import Count
 
+
 # Create your views here.
 
 def home(request):
@@ -81,4 +82,65 @@ def reply_topic(request, id):
     else:
         form = PostForm()
     return render(request, 'reply.html', {'topic': topic, 'form': form})
+
+
+@login_required(login_url='login')
+def profile(request, username):
+    if request.method == 'POST':
+        prof_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if prof_form.is_valid():
+            prof_form.save()
+            return redirect(request.path_info)
+    else:
+        prof_form = UpdateUserProfileForm(instance=request.user.profile)
+
+    context = {
+        'prof_form': prof_form,
+         }
+    return render(request, 'profile.html', context)
+
+def update_topic(request, id):
+    topic = get_object_or_404(Topic, id=id)
+    form = TopicForm(request.POST or None, instance = topic)
+    if form.is_valid():
+        form.save()
+        return redirect('topic_detail', id=id)
+    context={
+        'form':form
+    }
+    return render(request, 'update_t', context)
+
+    
+
+def update_post(request, id):
+    post = get_object_or_404(Post, id=id)
+    form = PostForm(request.POST or None, instance = post)
+    if form.is_valid():
+        form.save()
+        return redirect('topic_detail', id=id)
+    context={
+        'form':form
+    }
+    return render(request, 'update_p', context)
+
+
+
+def delete_topic(request, id):
+    context ={} 
+    topic = get_object_or_404(Topic, id = id) 
+    if request.method =="POST": 
+        topic.delete() 
+        return redirect('topic_detail', id=id) 
+  
+    return render(request, "delete_t.html", context) 
+    
+
+def delete_post(request, id):
+    context ={} 
+    post = get_object_or_404(Post, id = id) 
+    if request.method =="POST": 
+        post.delete() 
+        return redirect('topic_detail', id=id) 
+  
+    return render(request, "delete_p.html", context) 
 
