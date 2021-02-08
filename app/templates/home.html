@@ -1,44 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+  .card-img-top{
+    height: 60vh;
+  }
+</style>
 <div class="container">
   <ol class="breadcrumb my-4">
     <li class="breadcrumb-item active">Boards</li>
   </ol>
-  <table class="table">
-    <thead class="thead-inverse">
-      <tr>
-        <th>Board</th>
-        <th>Posts</th>
-        <th>Topics</th>
-        <th>Last Post</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for board in board %}
-      <tr>
-        <td>
-          <a href="{% url 'topics' board.id %}">{{ board.name }}</a>
-          <small class="text-muted d-block">{{ board.description }}</small>
-        </td>
-        <td class="align-middle">{{ board.get_posts_count }}</td>
-        <td class="align-middle">{{ board.topics.count }}</td>
-        <td> {% with post=board.get_last_post %}
-          {% if post %}
-          <small>
-            <a href="{% url 'topic_detail' post.topic.id %}">
-              By {{ post.created_by.username }} at {{ post.created_at }}
-            </a>
-          </small>
-          {% else %}
-          <small class="text-muted">
-            <em>No posts yet.</em>
-          </small>
-          {% endif %}
-          {% endwith %}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+
+  <div class="row">
+    {% for board in board %}
+    <div class="card m-2" style="width: 34rem;">
+      <img class="card-img-top" src="{{board.image.url}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"> <a href="{% url 'topics' board.id %}">{{ board.name }}</a></h5>
+        <p class="card-text">{{ board.description }}</p>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="card-text"><b>Post:</b>{{ board.get_posts_count }}</p>
+          </div>
+          <div class="col-md-6">
+            <p class="card-text"><b>Topic:</b>{{ board.topics.count }} </p>
+          </div>
+        </div>
+        {% with post=board.get_last_post %}
+        {% if post %}
+        <small>
+          <a href="{% url 'topic_detail' post.topic.id %}">
+            Last Post By {{ post.created_by.username }} at {{ post.created_at }}
+          </a>
+        </small>
+        {% else %}
+        <small class="text-muted">
+          <em>No posts yet.</em>
+        </small>
+        {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+
+
+
+    {% endfor %}
+  </div>
+
+
+
+
+
 </div>
 {% endblock %}

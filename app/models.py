@@ -46,10 +46,10 @@ class Topic(models.Model):
     views = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.name
+        return self.subject
 
     class Meta:
-        ordering = ["last_updated"]
+        ordering = ["-pk"]
 
 
 class Post(models.Model):
@@ -60,8 +60,6 @@ class Post(models.Model):
     created_by = models.ForeignKey(Profile,on_delete=models.CASCADE, related_name='posts')
     updated_by = models.ForeignKey(Profile,on_delete=models.CASCADE, null=True, related_name='+')
 
-    def __str__(self):
-        return self.name
 
     class Meta:
         ordering = ["-pk"]
