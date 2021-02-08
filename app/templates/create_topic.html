@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <ol class="breadcrumb my-4">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'topics' board.pk %}">{{ board.name }}</a></li>
+        <li class="breadcrumb-item active">Create topic</li>
+  </ol>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include 'form.html' %}
+    <button type="submit" class="btn btn-success">Post</button>
+  </form>
+{% endblock %}
+  </div>
