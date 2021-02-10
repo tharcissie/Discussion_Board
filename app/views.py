@@ -86,6 +86,7 @@ def reply_topic(request, id):
 
 @login_required(login_url='login')
 def profile(request, username):
+    topics = request.user.profile.topics.all()
     if request.method == 'POST':
         prof_form = UpdateUserProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if prof_form.is_valid():
@@ -96,6 +97,7 @@ def profile(request, username):
 
     context = {
         'prof_form': prof_form,
+        'topics':topics
          }
     return render(request, 'profile.html', context)
 
